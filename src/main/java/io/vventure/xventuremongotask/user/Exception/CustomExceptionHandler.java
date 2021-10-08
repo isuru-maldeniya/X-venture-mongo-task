@@ -13,4 +13,8 @@ public class CustomExceptionHandler {
     public ResponseEntity<Object> handleNoUser(NoUserAvailableException e){
         return new ResponseEntity<>(new ExceptionModel(e.getMessage(),e, HttpStatus.BAD_REQUEST, ZonedDateTime.now()) ,HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(value = {DeleteWasNotwork.class})
+    public ResponseEntity<Object> DeleteNotWork(DeleteWasNotwork e){
+        return new ResponseEntity<>(new ExceptionModel(e.getMessage(), e,HttpStatus.EXPECTATION_FAILED,ZonedDateTime.now()),HttpStatus.EXPECTATION_FAILED);
+    }
 }

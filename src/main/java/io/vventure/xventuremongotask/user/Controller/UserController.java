@@ -1,6 +1,7 @@
 package io.vventure.xventuremongotask.user.Controller;
 
 import io.vventure.xventuremongotask.user.DTO.UserDTO;
+import io.vventure.xventuremongotask.user.Exception.DeleteWasNotwork;
 import io.vventure.xventuremongotask.user.Exception.NoUserAvailableException;
 import io.vventure.xventuremongotask.user.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,15 @@ public class UserController {
             return new ResponseEntity<>(userService.findUserById(id),HttpStatus.OK);
         } catch (Exception e) {
             throw new NoUserAvailableException("User is not available",e);
+        }
+    }
+    @DeleteMapping(value = "/deleteuser/{id}")
+    public ResponseEntity<Boolean> deleteUser(@PathVariable String id){
+        boolean b = userService.deleteUser(id);
+        if(b){
+            return new ResponseEntity<>(true,HttpStatus.OK);
+        }else{
+            throw new DeleteWasNotwork("Delete was not successful");
         }
     }
 }

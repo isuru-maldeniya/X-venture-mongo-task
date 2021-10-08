@@ -22,4 +22,14 @@ public class UserService {
         User user = userRepository.findById(id).get();
         return new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getDob());
     }
+
+    public boolean deleteUser(String id) {
+        if(userRepository.existsById(id)){
+            userRepository.deleteById(id);
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 }
