@@ -42,4 +42,24 @@ public class UserService {
         }
 
     }
+
+    public UserDTO updateUser(UserDTO dto){
+        UserDTO userDTO=null;
+        User user=null;
+        if(!userRepository.existsById(dto.getId())){
+            return userDTO;
+        }
+        user=userRepository.findById(dto.getId()).get();
+        if(dto.getName()!=null && dto.getName()!=""){
+            user.setName(dto.getName());
+        }
+        if(dto.getEmail()!=null && dto.getEmail()!=""){
+            user.setEmail(dto.getEmail());
+        }
+        if(dto.getDob()!=null){
+            user.setDob(dto.getDob());
+        }
+        User save = userRepository.save(user);
+        return new UserDTO(save.getId(), save.getName(), save.getEmail(), save.getDob());
+    }
 }

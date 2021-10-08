@@ -41,6 +41,16 @@ public class UserController {
         }
     }
 
+    @PutMapping(value = "updateuser")
+    public ResponseEntity<UserDTO> updateUSer(@RequestBody UserDTO dto){
+        UserDTO userDTO = userService.updateUser(dto);
+        if(userDTO==null){
+            throw new NoUserAvailableException("User is not available");
+        }else{
+            return new ResponseEntity<>(userDTO,HttpStatus.OK);
+        }
+    }
+
     @DeleteMapping(value = "/deleteuser/{id}")
     public ResponseEntity<Boolean> deleteUser(@PathVariable String id){
         boolean b = userService.deleteUser(id);
