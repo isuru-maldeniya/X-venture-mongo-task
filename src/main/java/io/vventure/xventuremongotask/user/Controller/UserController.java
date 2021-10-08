@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -28,6 +30,17 @@ public class UserController {
             throw new NoUserAvailableException("User is not available",e);
         }
     }
+
+    @GetMapping(value = "getall")
+    public ResponseEntity<List<UserDTO>> getAllUsers(){
+        List<UserDTO> all = userService.getAll();
+        if(all.isEmpty()){
+            throw new NoUserAvailableException("Currently there is no users");
+        }else{
+            return new ResponseEntity<>(all,HttpStatus.OK);
+        }
+    }
+
     @DeleteMapping(value = "/deleteuser/{id}")
     public ResponseEntity<Boolean> deleteUser(@PathVariable String id){
         boolean b = userService.deleteUser(id);
