@@ -2,7 +2,9 @@ package io.vventure.xventuremongotask.user.Controller;
 
 import io.vventure.xventuremongotask.user.DTO.UserDTO;
 import io.vventure.xventuremongotask.user.Exception.DeleteWasNotwork;
+import io.vventure.xventuremongotask.user.Exception.GnaricException;
 import io.vventure.xventuremongotask.user.Exception.NoUserAvailableException;
+import io.vventure.xventuremongotask.user.Exception.StatusEnum;
 import io.vventure.xventuremongotask.user.Services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +55,7 @@ public class UserController {
         UserDTO userDTO = userService.updateUser(dto);
         if(userDTO==null){
             logger.trace("user is no available");
-            throw new NoUserAvailableException("User is not available");
+            throw new GnaricException("message",StatusEnum.USER_NOT_AVAILABLE);
         }else{
             return new ResponseEntity<>(userDTO,HttpStatus.OK);
         }
