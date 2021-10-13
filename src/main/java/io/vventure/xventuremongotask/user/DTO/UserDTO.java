@@ -1,9 +1,15 @@
 package io.vventure.xventuremongotask.user.DTO;
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 public class UserDTO {
+
     private String id;
+    @NotBlank
+    @Size(min = 2,max = 20)
+//    @Min(value = 2, message = "the length is not enough")
+//    @Max(value = 20,message = "the length is too high")
     private String name;
     private String email;
     private LocalDate dob;

@@ -1,5 +1,8 @@
 package io.vventure.xventuremongotask.user.Controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.vventure.xventuremongotask.user.DTO.UserDTO;
 import io.vventure.xventuremongotask.user.Exception.DeleteWasNotwork;
 import io.vventure.xventuremongotask.user.Exception.GnaricException;
@@ -34,7 +37,7 @@ public class UserController {
         try {
             return new ResponseEntity<>(userService.findUserById(id),HttpStatus.OK);
         } catch (Exception e) {
-            logger.trace("user is no available");
+            logger.info("user is no available");
             throw new NoUserAvailableException("User is not available",e);
         }
     }
@@ -43,18 +46,22 @@ public class UserController {
     public ResponseEntity<List<UserDTO>> getAllUsers(){
         List<UserDTO> all = userService.getAll();
         if(all.isEmpty()){
-            logger.trace("User list is empty");
+            logger.info("User list is empty");
             throw new NoUserAvailableException("Currently there is no users");
         }else{
             return new ResponseEntity<>(all,HttpStatus.OK);
         }
     }
 
+    @Operation(summary = "this is updating the exciting data record")
+//    @ApiResponses(value = {
+//            @ApiResponse()
+//    })
     @PutMapping(value = "updateuser")
     public ResponseEntity<UserDTO> updateUSer(@RequestBody UserDTO dto){
         UserDTO userDTO = userService.updateUser(dto);
         if(userDTO==null){
-            logger.trace("user is no available");
+            logger.info("user is no available");
             throw new GnaricException("message",StatusEnum.USER_NOT_AVAILABLE);
         }else{
             return new ResponseEntity<>(userDTO,HttpStatus.OK);
@@ -67,7 +74,7 @@ public class UserController {
         if(b){
             return new ResponseEntity<>(true,HttpStatus.OK);
         }else{
-            logger.trace("user is no available");
+            logger.info("user is no available");
             throw new DeleteWasNotwork("Delete was not successful");
         }
     }
