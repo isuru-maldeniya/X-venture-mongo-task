@@ -28,11 +28,13 @@ public class UserController {
     private Logger logger;
 
     @PostMapping(value = "/adduser")
+    @Operation(summary = "this is adding a new user")
     public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO dto){
         return new ResponseEntity<>(userService.addUser(dto), HttpStatus.OK);
     }
 
     @GetMapping(value = "/getuser/{id}")
+    @Operation(summary = "this is giving user with certain id")
     public ResponseEntity<UserDTO> getUserById(@PathVariable String id){
         try {
             return new ResponseEntity<>(userService.findUserById(id),HttpStatus.OK);
@@ -43,6 +45,7 @@ public class UserController {
     }
 
     @GetMapping(value = "getall")
+    @Operation(summary = "this is giving all the users")
     public ResponseEntity<List<UserDTO>> getAllUsers(){
         List<UserDTO> all = userService.getAll();
         if(all.isEmpty()){
@@ -69,6 +72,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/deleteuser/{id}")
+    @Operation(summary = "this is deleting the user with certain id", hidden = true)
     public ResponseEntity<Boolean> deleteUser(@PathVariable String id){
         boolean b = userService.deleteUser(id);
         if(b){
